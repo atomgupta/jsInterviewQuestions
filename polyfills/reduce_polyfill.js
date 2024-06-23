@@ -6,24 +6,11 @@ console.log(actualreduceresult)
 
 
 Array.prototype.reduce_polyfill=function(callback,initialValue){
-    let i;
-    let acc;
-    let originalArray=this
-    if(initialValue===undefined){
-        i=1
-        acc=originalArray[0]
-    
-    }
-    else{
-        i=0
-        acc=initialValue
-
-    }
-
-    for(;i<originalArray.length;i++){
-        acc=callback(acc,originalArray[i])
-    }
-    return acc
+let accumulator=initialValue
+for(let i=0;i<this.length;i++){
+    accumulator=accumulator!==undefined?callback(this[i]):this[0]
 }
-let polyfillreduceresult=arr.reduce((acc,current)=>acc+current,500)
+return accumulator
+}
+let polyfillreduceresult=arr.reduce((acc,current)=>acc+current)
 console.log(polyfillreduceresult)
