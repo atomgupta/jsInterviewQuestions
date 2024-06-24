@@ -1,0 +1,101 @@
+:root{
+    --body-background:#f3e9e9;
+    --button-background-color:rgb(27, 26, 26);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+body{
+    height: 100vh;
+    padding:20px;
+    background-color:var(--body-background);
+    position: relative;
+}
+
+.button-container{
+    width: 300px;
+    display: flex;
+    padding:20px;
+    justify-content: space-around;
+}
+.button-container button{
+    padding: 10px;
+    background-color:var(--button-background-color);
+    color: var(--body-background);
+    border: none;
+}
+
+.toast-container{
+    position: absolute;
+    bottom:30px;
+    right:30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.toast{
+    width: 200px;
+    padding:20px 20px;
+    margin: 10px 0px;
+    display: flex;
+    justify-content: flex-start;
+    border:1px solid black;
+    box-shadow: 0px 0px 3px black;
+    transform: translateX(100%);
+    animation: anim 0.1s linear forwards;
+}
+@keyframes anim {
+    100%{
+        transform: translateX(0);
+    }
+}
+
+
+.toast::after{
+    content:'';
+    width:100%;
+    height: 5px;
+    left:0;
+    bottom: 0;
+    position: absolute;
+    animation: reduce 3s linear forwards;
+}
+@keyframes reduce{
+    100%{
+    width: 0;       
+    }
+}
+.toast.error::after{
+    background-color: red;
+}
+
+.toast.success::after{
+    background-color: green;
+}
+.toast.warning::after{
+    background-color: yellow;
+}
+
+.toast-icon{
+    padding:2px;
+    border-radius:50%;
+}
+.toast .toast-icon{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.toast.success .toast-icon{
+    background-color: green;
+}
+.toast.warning .toast-icon{
+    background-color:yellow
+}
+.toast.error .toast-icon{
+    background-color: red;
+}
