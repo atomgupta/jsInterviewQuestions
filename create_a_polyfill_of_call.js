@@ -26,5 +26,5 @@ let obj2={
   age:35
 }
 
-console.log(barSecurityAgeCheck.call(obj1,21))
-console.log(barSecurityAgeCheck.call(obj2,21))
+console.log(barSecurityAgeCheck.myCall(obj1,21))
+console.log(barSecurityAgeCheck.myCall(obj2,21))
