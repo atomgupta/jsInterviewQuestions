@@ -1,20 +1,27 @@
-Function.prototype.myApply(thisArg,args=[]){
-  let wrappedObj= Object(thisArg)
-  const sym=Symbol()
-  Object.defineProperty(wrappedObj,sym,{
-    enumerable:false,
-    value:this
-  })
-  return wrappedObj[sym](...args)
+function createCocktail(base,mixer,topping){
+  return `${this.name} :  your drink is ready which is called ${getDrinkName.apply(undefined,[base,mixer,topping])}`
+}
+function getDrinkName(base,mixer,topping){
+  return `${base.toUpperCase()}-${mixer.toLowerCase()}-${topping.toUpperCase()}`
 }
 
-function createCocktail(base="rum",mixer="coke",topping="lemon"){
+let obj1={
+  name:"tom",
+}
 
-  return `Here is your ${base}/${mixer}/${topping} cocktail`
+console.log(createCocktail.apply(obj1,['rum','coke','lemon']))
+
+Function.prototype.myApply=function(thisArg,args){
+let context = thisArg || (typeof window!=='undefined'? window:globalThis)
+const sym=Symbol()
+context[sym] = this
+const result = context[sym](...args) 
+delete context[sym]
+return result
 }
-let customer1={
-  name:"harry",
-  age:35
+let obj2={
+  name:'bob'
 }
-createCocktail.apply(customer1,["blacklabel whiskey","water","basil"])
-createCocktail.myApply(customer1,["blacklabel whiskey","water","basil"])
+console.log(createCocktail.myApply(obj2,['gin','ice','berry']))
+
+

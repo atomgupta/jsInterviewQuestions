@@ -1,30 +1,40 @@
+/**
+ * Polyfill for the call method.
+ * 
+ * Executes the provided function with the specified `this` context and arguments.
+ * 
+ * @param {Object} thisArg - The value to use as `this` when calling the function.
+ * @param {...*} args - The arguments to pass to the function.
+ * @returns {*} The result of the function call.
+ */
+Function.prototype.myCall = function(thisArg, ...args) {
+  // Implementation here
+};
+///Polyfill for call method
+
+function checkSecurity(ageLimit){
+if(this.age>=ageLimit){
+  console.log(this.name + " allowed to go inside")
+}
+else{
+  console.log(this.name + " not allowed to go")
+}
+}
+const obj1={
+  name:'bob',
+  age:21
+}
+const obj2={
+  name:'tom',
+  age:18
+}
 Function.prototype.myCall=function(thisArg,...args){
-
-  const functionToBeCalled=this
-  let wrappedObj=Object(thisArg)
-  const sym=Symbol()
-  Object.defineProperty(wrappedObj,sym,{
-    enumerable:false,
-    value:functionToBeCalled
-})
-return wrappedObj[sym](...args)
-
+  let context= thisArg || (typeof window!=="undefined"?window:globalThis)
+  const sym= Symbol()
+  context[sym]=this
+  const result = context[sym](...args)
+  delete context[sym]
+  return result
 }
-function barSecurityAgeCheck(ageLimit){
-  if(this.age<ageLimit){
-    return "cant go inside"
-  }
-  return "welcome"
-}
-
-let obj1={
-  name:"harry",
-  age:20
-}
-let obj2={
-  name:"sam",
-  age:35
-}
-
-console.log(barSecurityAgeCheck.myCall(obj1,21))
-console.log(barSecurityAgeCheck.myCall(obj2,21))
+checkSecurity.myCall(obj1,20)
+checkSecurity.myCall(obj2,20)
